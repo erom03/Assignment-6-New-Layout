@@ -28,8 +28,15 @@ int top(Stack * stack);
 void deleteStack(Stack * stack);
 
 int main() {
-    // Create stack
-    Stack * stack = createStack();
+    // Create stack for current values
+    Stack * currStack = createStack();
+
+    // Create stack for previous values
+    Stack * prevStack = createStack();
+
+    // Initialize stacks with initial values to avoid problems
+    push(currStack, -1);
+    push(prevStack, -1);
 
     // Keeps track of numbers user is inputting
     int userInput;
@@ -39,12 +46,22 @@ int main() {
 
     //Keep looping until user inputs -1
     while(userInput != -1) {
+        if(userInput == prevStack->head->data) {
+            printf("We went back!\n");
+            pop(currStack);
+            pop(prevStack);
+        } else {
+            printf("Adding number to stack!\n");
+            push(prevStack, currStack->head->data);
+            push(currStack, userInput);
+        }
         
         scanf("%d", &userInput);
     }
 
     // Delete stack, free memory, and exit program
-    deleteStack(stack);
+    deleteStack(currStack);
+    deleteStack(prevStack);
     return 0;
 }
 
