@@ -32,12 +32,15 @@ int main() {
     Stack * stack = createStack();
 
     // Keeps track of numbers user is inputting
-    int userInput = 0;
+    int userInput;
+
+    // Get first number from user
+    scanf("%d", &userInput);
 
     //Keep looping until user inputs -1
     while(userInput != -1) {
+        
         scanf("%d", &userInput);
-
     }
 
     // Delete stack, free memory, and exit program
