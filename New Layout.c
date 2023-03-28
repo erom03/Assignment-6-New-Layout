@@ -34,30 +34,68 @@ int main() {
     // Create stack for previous values
     Stack * prevStack = createStack();
 
-    // Initialize stacks with initial values to avoid problems
+    // Initialize stacks with initial values to avoid problems when comparing later
     push(currStack, -1);
     push(prevStack, -1);
 
     // Keeps track of numbers user is inputting
     int userInput;
 
+    // Track possible quarters
+    int quarters = 0;
+
+    // Tracks how many corridors to current quarter
+    int corridors = -1; // Set to -1 so entrance isn't counted as a corridor
+
+    // Tracks total distance to quarters
+    int distance = 0;
+
+    // Tracks if currently backtracking in stack
+    int backtrack = 0;
+
     // Get first number from user
     scanf("%d", &userInput);
 
     //Keep looping until user inputs -1
     while(userInput != -1) {
+        // Checks if number was previously entered
         if(userInput == prevStack->head->data) {
-            printf("We went back!\n");
-            pop(currStack);
-            pop(prevStack);
+            // Check if were not currently backtracking in the stack
+            if(!backtrack) {
+                ++quarters; // Increment quarters
+                
+                // Add number of corridors needed to reach this point to distance
+                distance += corridors; 
+            }
+            
+            // Set status to currently backtracking
+            backtrack = 1;
+
+            // Decrement corridors needed to reach point
+            --corridors;
+
+            // Removes top value from stacks
+            pop(currStack); // In here, its the last value added
+            pop(prevStack); // In here, its the previous value
         } else {
-            printf("Adding number to stack!\n");
+            // Make sure it is no longer set were backtracking
+            backtrack = 0;
+
+            // Increment number of corridors needed to reach location
+            ++corridors;
+
+            // Add the current value in currStack to prevStack
             push(prevStack, currStack->head->data);
+            // Add the users input to currStack
             push(currStack, userInput);
         }
-        
+
+        // Get next val from user
         scanf("%d", &userInput);
     }
+
+    // Print needed values
+    printf("%d %d", quarters, distance); 
 
     // Delete stack, free memory, and exit program
     deleteStack(currStack);
