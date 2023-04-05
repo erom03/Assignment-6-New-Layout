@@ -59,7 +59,7 @@ int main() {
     //Keep looping until user inputs -1
     while(userInput != -1) {
         // Checks if number was previously entered
-        if(userInput == prevStack->head->data) {
+        if(userInput == top(prevStack)) {
             // Check if were not currently backtracking in the stack
             if(!backtrack) {
                 ++quarters; // Increment quarters
@@ -85,7 +85,7 @@ int main() {
             ++corridors;
 
             // Add the current value in currStack to prevStack
-            push(prevStack, currStack->head->data);
+            push(prevStack, top(currStack));
             // Add the users input to currStack
             push(currStack, userInput);
         }
