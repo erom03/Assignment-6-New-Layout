@@ -77,7 +77,7 @@ int main() {
             // Removes top value from stacks
             pop(currStack); // In here, its the last value added
             pop(prevStack); // In here, its the previous value
-        } else {
+        } else {    // Number wasn't previously entered
             // Make sure it is no longer set were backtracking
             backtrack = 0;
 
